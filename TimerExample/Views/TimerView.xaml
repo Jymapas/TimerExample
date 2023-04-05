@@ -1,0 +1,24 @@
+﻿<Window x:Class="TimerExample.Views.TimerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TimerExample.ViewModels"
+        mc:Ignorable="d"
+        Title="Timer" Height="150" Width="200">
+    
+    <Window.DataContext>
+        <local:TimerViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <TextBlock Text="{Binding SecondsLeft}"
+                   FontSize="36"
+                   HorizontalAlignment="Center"/>
+        <Button Content="Start"
+                Command="{Binding StartCommand}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Margin="0, 20, 0, 20"/>
+    </Grid>
+</Window>
