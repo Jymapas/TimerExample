@@ -11,14 +11,28 @@
         <local:TimerViewModel/>
     </Window.DataContext>
     
-    <Grid>
-        <TextBlock Text="{Binding SecondsLeft}"
-                   FontSize="36"
-                   HorizontalAlignment="Center"/>
-        <Button Content="Start"
-                Command="{Binding StartCommand}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Margin="0, 20, 0, 20"/>
-    </Grid>
+    <UniformGrid Rows="2">
+        <TextBlock Text="{Binding RemainingTime}"
+                   FontSize="48"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <UniformGrid Columns="2">
+            <Button Content="Start" 
+                    Command="{Binding StartCommand}" 
+                    IsEnabled="{Binding !IsRunning}" />
+            <Button Content="Stop" 
+                    Command="{Binding StopCommand}" 
+                    IsEnabled="{Binding IsRunning}" />
+        </UniformGrid>
+    </UniformGrid>
+    
+    <!-- <Grid> -->
+    <!--     <Grid.RowDefinitions> -->
+    <!--         <RowDefinition Height="Auto" /> -->
+    <!--         <RowDefinition Height="Auto" /> -->
+    <!--     </Grid.RowDefinitions> -->
+    <!--     <TextBlock Text="{Binding RemainingTime}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" /> -->
+    <!--     <Button Grid.Row="1" Content="Start" Command="{Binding StartCommand}" IsEnabled="{Binding !IsRunning}" /> -->
+    <!--     <Button Grid.Row="1" Content="Stop" Command="{Binding StopCommand}" IsEnabled="{Binding IsRunning}" /> -->
+    <!-- </Grid> -->
 </Window>

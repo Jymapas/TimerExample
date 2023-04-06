@@ -5,36 +5,47 @@ namespace TimerExample.Models;
 
 public class TimerModel
 {
+    private const int _totalTime = 60;
+    private int _remainingTime;
     private Timer _timer;
-    private int _secondsLeft;
 
-    public event EventHandler<int> TimeChanged;
-
-    public bool IsRunning { get; private set; }
     public TimerModel()
     {
+        _remainingTime = _totalTime;
         _timer = new Timer(1000);
-        _timer.Elapsed += OnTimedEvent;
-        _secondsLeft = 60;
+        _timer.Elapsed += OnTimerElapsed;
+    }
+
+    public event Action TimerTick;
+
+    public int RemainingTime
+    {
+        get { return _remainingTime; }
     }
 
     public void Start()
     {
-        IsRunning = true;
         _timer.Start();
     }
 
     public void Stop()
     {
-        IsRunning = false;
         _timer.Stop();
+        Reset();
     }
 
-    private void OnTimedEvent(object sender, ElapsedEventArgs e)
+    private void OnTimerElapsed(object sender, ElapsedEventArgs e)
     {
-        _secondsLeft--;
-        TimeChanged?.Invoke(this, _secondsLeft);
+        _remainingTime--;
+        TimerTick?.Invoke();
+        if (_remainingTime == 0)
+        {
+            _timer.Stop();
+        }
+    }
 
-        if (_secondsLeft == 0) Stop();
+    private void Reset()
+    {
+        _remainingTime = _totalTime;
     }
 }
