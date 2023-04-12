@@ -5,34 +5,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:TimerExample.ViewModels"
         mc:Ignorable="d"
-        Title="Timer" Height="150" Width="200">
+        Title="Timer" Height="350" Width="250">
     
     <Window.DataContext>
         <local:TimerViewModel/>
     </Window.DataContext>
     
     <UniformGrid Rows="2">
-        <TextBlock Text="{Binding RemainingTime}"
+        <TextBlock Text="{Binding DisplayTime}"
                    FontSize="48"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        <UniformGrid Columns="2">
-            <Button Content="Start" 
-                    Command="{Binding StartCommand}" 
-                    IsEnabled="{Binding !IsRunning}" />
-            <Button Content="Stop" 
-                    Command="{Binding StopCommand}" 
-                    IsEnabled="{Binding IsRunning}" />
+        <UniformGrid Rows="2" Columns="2">
+            <Button Content="Вопрос" 
+                    Command="{Binding StartTimerCommand}" />
+            <Button Content="Дуплет"
+                    Command="{Binding StartTimer30Command}" />
+            <Button Content="Блиц"
+                    Command="{Binding StartTimer20Command}" />
+            <Button Content="Стоп" 
+                    Command="{Binding StopTimerCommand}" />
         </UniformGrid>
     </UniformGrid>
-    
-    <!-- <Grid> -->
-    <!--     <Grid.RowDefinitions> -->
-    <!--         <RowDefinition Height="Auto" /> -->
-    <!--         <RowDefinition Height="Auto" /> -->
-    <!--     </Grid.RowDefinitions> -->
-    <!--     <TextBlock Text="{Binding RemainingTime}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" /> -->
-    <!--     <Button Grid.Row="1" Content="Start" Command="{Binding StartCommand}" IsEnabled="{Binding !IsRunning}" /> -->
-    <!--     <Button Grid.Row="1" Content="Stop" Command="{Binding StopCommand}" IsEnabled="{Binding IsRunning}" /> -->
-    <!-- </Grid> -->
 </Window>

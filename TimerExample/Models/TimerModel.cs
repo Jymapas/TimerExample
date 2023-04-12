@@ -1,51 +1,41 @@
 ﻿using System;
 using System.Timers;
 
-namespace TimerExample.Models;
-
-public class TimerModel
+namespace TimerExample.Models
 {
-    private const int _totalTime = 60;
-    private int _remainingTime;
-    private Timer _timer;
-
-    public TimerModel()
+    public class TimerModel
     {
-        _remainingTime = _totalTime;
-        _timer = new Timer(1000);
-        _timer.Elapsed += OnTimerElapsed;
-    }
+        private Timer _timer;
+        private int _secondsLeft;
 
-    public event Action TimerTick;
+        public event EventHandler<int> TimeChanged;
 
-    public int RemainingTime
-    {
-        get { return _remainingTime; }
-    }
+        public TimerModel()
+        {
+            _timer = new Timer(1000);
+            _timer.Elapsed += OnTimedEvent;
+        }
 
-    public void Start()
-    {
-        _timer.Start();
-    }
+        public void Start(int secondsLeft)
+        {
+            _secondsLeft = secondsLeft;
+            _timer.Start();
+        }
 
-    public void Stop()
-    {
-        _timer.Stop();
-        Reset();
-    }
-
-    private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-    {
-        _remainingTime--;
-        TimerTick?.Invoke();
-        if (_remainingTime == 0)
+        public void Stop()
         {
             _timer.Stop();
         }
-    }
 
-    private void Reset()
-    {
-        _remainingTime = _totalTime;
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            _secondsLeft--;
+            TimeChanged?.Invoke(this, _secondsLeft);
+
+            if (_secondsLeft == 0)
+            {
+                _timer.Stop();
+            }
+        }
     }
 }
